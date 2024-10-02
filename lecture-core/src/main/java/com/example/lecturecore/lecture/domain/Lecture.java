@@ -1,6 +1,5 @@
-package com.example.lecturecore.user.domain;
+package com.example.lecturecore.lecture.domain;
 
-import com.example.lecturecore.lecture.domain.UserLecture;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,36 +11,35 @@ import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class Lecture {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
+    @Column(name = "lecture_id")
     private Long id;
 
-    private String name;
+    private String title;
+    private String professor;
 
-    private String email;
-    private String password;
+    private Integer capacity;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "lecture")
     private final List<UserLecture> userLectures = new ArrayList<>();
 
-    public User(String name, String email, String password) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-    }
-
-    public void encodePassword(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
+    public Lecture(String title, String professor, Integer capacity) {
+        this.title = title;
+        this.professor = professor;
+        this.capacity = capacity;
     }
 
     public void add(UserLecture userLecture) {
         this.userLectures.add(userLecture);
+    }
+
+    public void register() {
+        this.capacity -= 1;
     }
 }
