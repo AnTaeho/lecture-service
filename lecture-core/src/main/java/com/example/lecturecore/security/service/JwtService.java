@@ -4,6 +4,7 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.example.lecturecore.common.dto.TokenResponse;
+import com.example.lecturecore.event.refreshtoken.RefreshTokenEvent;
 import com.example.lecturecore.security.login.LoginService;
 import com.example.lecturecore.user.domain.User;
 import com.example.lecturecore.user.repository.UserRepository;
@@ -46,7 +47,7 @@ public class JwtService {
                 .orElseThrow(() -> new IllegalArgumentException("3번 후보"));
         String accessToken = makeAccessToken(user.getEmail());
         String refreshToken = makeRefreshToken();
-//        publisher.publishEvent(new RefreshToRefreshTokenEventkenEvent(user.getEmail(), refreshToken));
+        publisher.publishEvent(new RefreshTokenEvent(user.getEmail(), refreshToken));
         return new TokenResponse(accessToken, refreshToken);
     }
 
