@@ -12,21 +12,17 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Ticket {
+public class UserTicket {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ticket_id")
+    @Column(name = "user_ticket_id")
     private Long id;
 
-    private int amount;
-    private Long lectureId;
+    private Long ticketId;
+    private String email;
 
-    public Ticket(int amount, Long lectureId) {
-        this.amount = amount;
-        this.lectureId = lectureId;
-    }
-
-    public void issue() {
-        this.amount -= 1;
+    public UserTicket(Long ticketId, String email) {
+        this.ticketId = ticketId;
+        this.email = email;
     }
 }

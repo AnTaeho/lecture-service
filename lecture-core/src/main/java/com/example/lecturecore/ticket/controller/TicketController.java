@@ -5,6 +5,7 @@ import com.example.lecturecore.common.dto.EmptyDto;
 import com.example.lecturecore.ticket.controller.dto.TickerResponse;
 import com.example.lecturecore.ticket.controller.dto.TicketRequest;
 import com.example.lecturecore.ticket.service.TicketService;
+import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +28,7 @@ public class TicketController {
 
     @PostMapping("/{ticketId}")
     public CommonResponse<EmptyDto> issueTicket(@PathVariable("ticketId") Long ticketId) {
-        ticketService.issue(ticketId, getUserName());
+        ticketService.issue(ticketId, UUID.randomUUID().toString());
         return CommonResponse.EMPTY;
     }
 
