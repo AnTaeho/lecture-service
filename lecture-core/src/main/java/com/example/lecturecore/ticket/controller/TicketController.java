@@ -28,7 +28,7 @@ public class TicketController {
 
     @PostMapping("/{ticketId}")
     public CommonResponse<EmptyDto> issueTicket(@PathVariable("ticketId") Long ticketId) {
-        ticketService.issue(ticketId, UUID.randomUUID().toString());
+        ticketService.issueWithKafka(ticketId, UUID.randomUUID().toString());
         return CommonResponse.EMPTY;
     }
 

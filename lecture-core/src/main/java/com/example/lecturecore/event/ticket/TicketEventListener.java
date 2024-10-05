@@ -18,6 +18,7 @@ public class TicketEventListener {
 
     @TransactionalEventListener(value = TicketEvent.class, phase = TransactionPhase.BEFORE_COMMIT)
     public void saveOutboxInfo(TicketEvent ticketEvent) {
+        System.out.println("durl");
         outboxRepository.save(new TicketOutbox(ticketEvent.ticketId(), ticketEvent.email()));
     }
 
