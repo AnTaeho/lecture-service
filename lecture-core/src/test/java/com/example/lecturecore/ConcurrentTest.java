@@ -67,4 +67,34 @@ public class ConcurrentTest {
         assertThat((count)).isEqualTo(1000L);
     }
 
+//    @Test
+//    void 여러명_응모2() throws InterruptedException {
+//
+//        Ticket savedTicket = ticketRepository.save(new Ticket(1000, 1L));
+//
+//        int threadCount = 10000;
+//        ExecutorService executorService = Executors.newFixedThreadPool(32);
+//        CountDownLatch latch = new CountDownLatch(threadCount);
+//        long startTime = System.currentTimeMillis();
+//
+//        for (int i = 0; i < threadCount; i++) {
+//            String userId = String.valueOf(i);
+//            executorService.submit(() -> {
+//                try {
+//                    ticketService.issue2(savedTicket.getId(), userId);
+//                } finally {
+//                    latch.countDown();
+//                }
+//            });
+//        }
+//
+//        latch.await();
+//
+//        long stopTime = System.currentTimeMillis();
+//        System.out.println(stopTime - startTime + "ms");
+//
+//        long count = userTicketRepository.count();
+//        assertThat((count)).isEqualTo(1000L);
+//    }
+
 }

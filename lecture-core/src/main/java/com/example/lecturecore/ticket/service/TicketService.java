@@ -10,12 +10,14 @@ import com.example.lecturecore.ticket.repository.TicketRepository;
 import com.example.lecturecore.ticket.repository.UserTicketRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
+@Slf4j
 @RequiredArgsConstructor
 public class TicketService {
 
@@ -38,33 +40,31 @@ public class TicketService {
             return;
         }
 
-        // RDB 쓰기 연산 (Kafka 메세지 발행으로 바꿀 예정)
-
         userTicketRepository.save(new UserTicket(ticketId, email));
 //        ticket.issue();
 //        ticketRepository.saveAndFlush(ticket);
 //        publisher.publishEvent(new TicketEvent(ticketId, email));
     }
 
-    public void issue2(Long ticketId, String email) {
-        int amount = getAmount(ticketId);
-        List<Long> execute = ticketRedisRepository.execute(new RedisVO("ticket:" + ticketId, email));
-
-        if (execute.get(0) >= amount) {
-            return;
-        }
-
-        if (execute.get(1) != 1L) {
-            return;
-        }
-
-        // RDB 쓰기 연산 (Kafka 메세지 발행으로 바꿀 예정)
-
-        userTicketRepository.save(new UserTicket(ticketId, email));
+//    public void issue2(Long ticketId, String email) {
+//        int amount = getAmount(ticketId);
+//        List<Long> execute = ticketRedisRepository.execute(new RedisVO("ticket:" + ticketId, email));
+//
+//        if (execute.get(0) >= amount) {
+//            return;
+//        }
+//
+//        if (execute.get(1) != 1L) {
+//            return;
+//        }
+//
+//        // RDB 쓰기 연산 (Kafka 메세지 발행으로 바꿀 예정)
+//
+//        userTicketRepository.save(new UserTicket(ticketId, email));
 //        ticket.issue();
 //        ticketRepository.saveAndFlush(ticket);
 //        publisher.publishEvent(new TicketEvent(ticketId, email));
-    }
+//    }
 
     public TickerResponse createTicket(TicketRequest ticketRequest) {
         Ticket ticket = new Ticket(
